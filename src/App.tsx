@@ -2,13 +2,18 @@ import { Heading } from './components/Heading';
 
 import './styles/theme.css';
 import './styles/global.css';
+import { TimerIcon } from 'lucide-react';
 
 export default function App() {
   console.log('App component rendered');
   return (
     <>
-      <Heading attr={123} attr2='string'>Olá Mundo</Heading>
-      <Heading>Olá Mundo2</Heading>
+      <Heading>
+        Olá Mundo
+        <button>
+          <TimerIcon />
+        </button>
+      </Heading>
 
       <h1>Welcome to Chronos Pomodoro</h1>
       <p>Your productivity companion.</p>
