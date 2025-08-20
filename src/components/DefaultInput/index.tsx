@@ -1,8 +1,8 @@
-import type React from 'react';
+import styles from './styles.module.css';
 
 type DefaultInputProps = {
   id: string;
-  labelText?: string;
+  labelText: string;
 } & React.ComponentProps<'input'>;
 
 export function DefaultInput({
@@ -13,8 +13,10 @@ export function DefaultInput({
 }: DefaultInputProps) {
   return (
     <>
-      {labelText && <label htmlFor={id}>{labelText}</label>}
-      <input id={id} type={type} {...rest} />
+      <div className={styles.inputGroup}>
+        <label htmlFor={id}>{labelText}</label>
+        <input className={styles.input} id={id} type={type} {...rest} />
+      </div>
     </>
   );
 }
