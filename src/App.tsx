@@ -8,22 +8,29 @@ import { DefaultButton } from './components/DefaultButton';
 import { PlayCircleIcon } from 'lucide-react';
 import { Footer } from './components/Footer';
 import { Heading } from './components/Heading';
+import { useState } from 'react';
 
 import './styles/theme.css';
 import './styles/global.css';
 
 export default function App() {
-  let numero = 0;
+
+  //Sempre que eu usar useState, não vou usar atribuição '=' diretamente
+  // const [numero, setNumero] = useState(()=> {
+  //   console.log('useState foi executado');
+  //   return 0;
+  // });
+
+  const [numero, setNumero] = useState(0);
+
+
 
   function handleClick() {
-    const span = document.getElementById('numero');
-
-    if (!span) return;
-
-    numero += 1;
-    span.innerText = numero.toString();
-    console.log(numero, Date.now());
+    // setNumero((prevState) => prevState + 1); // Atualiza o estado, incrementando o número
+   setNumero(1); // Atualiza o estado, incrementando o número
   }
+
+  
   return (
     <>
       <Heading>
