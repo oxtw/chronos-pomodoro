@@ -7,6 +7,7 @@ import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
+import { formatSecondsToMinutes } from '../../utils/formatSecondsToMinutes';
 
 //Utilizar useState quando quiser o valor do input em tempo real.
 //Utilizar useRef quando quiser o valor do input somente no momento do submit.
@@ -52,7 +53,7 @@ export function MainForm() {
       activeTask: newTask,
       currentCycle: nextCycle,
       secondsRemaining, //conferir
-      formattedSecondsRemaining: '00:00', //conferir
+      formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining), //conferir
       tasks: [...prevState.tasks, newTask],
     }));
   }
