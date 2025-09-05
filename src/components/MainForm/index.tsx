@@ -5,16 +5,21 @@ import { DefaultInput } from '../DefaultInput';
 import { useRef } from 'react';
 import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
+import { getNextCycle } from '../../utils/getNextCycle';
 
 //Utilizar useState quando quiser o valor do input em tempo real.
 //Utilizar useRef quando quiser o valor do input somente no momento do submit.
 export function MainForm() {
-  const { setState } = useTaskContext();
+  const { state, setState } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
-
 
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+      //Ciclos
+    const nextCycle = getNextCycle(state.currentCycle);
+    console.log('Próximo ciclo:', nextCycle);
+
 
     //Se o input estiver vazio, não faz nada.
     if (taskNameInput.current === null) return;
@@ -40,14 +45,14 @@ export function MainForm() {
     };
 
     const secondsRemaining = newTask.duration * 60;
-    
+
     setState(prevState => ({
       ...prevState,
       config: { ...prevState.config },
       activeTask: newTask,
-      currentCycle: 1, //conferir
-      secondsRemaining,//conferir
-      formattedSecondsRemaining: '00:00',//conferir
+      currentCycle: nextCycle,
+      secondsRemaining, //conferir
+      formattedSecondsRemaining: '00:00', //conferir
 
       // nunca formatar um array diretamente, sempre pegar os dados do array anterior
       tasks: [...prevState.tasks, newTask],
