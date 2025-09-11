@@ -47,6 +47,19 @@ export function MainForm() {
     };
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+
+    const worker = new Worker(
+      new URL('../../workers/timerWorker.js', import.meta.url),
+    );
+
+    worker.postMessage('FAVOR');// sim, posso fazer um favor
+    worker.postMessage('FALA_OI');
+    worker.postMessage('BLABLALA');
+    worker.postMessage('FECHAR');
+
+    worker.onmessage = function(event){
+      console.log('PRINCIPAL RECEBEU', event.data);
+    }
   }
 
   function handleInterruptTask() {
