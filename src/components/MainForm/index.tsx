@@ -7,20 +7,20 @@ import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
-import { formatSecondsToMinutes } from '../../utils/formatSecondsToMinutes';
+import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 
 //Utilizar useState quando quiser o valor do input em tempo real.
 //Utilizar useRef quando quiser o valor do input somente no momento do submit.
 export function MainForm() {
-  const { state, setState } = useTaskContext();
+  const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
+
+  //Ciclos
+  const nextCycle = getNextCycle(state.currentCycle);
+  const nextCycleType = getNextCycleType(nextCycle);
 
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    //Ciclos
-    const nextCycle = getNextCycle(state.currentCycle);
-    const nextCycleType = getNextCycleType(nextCycle);
 
     //Se o input estiver vazio, não faz nada.
     if (taskNameInput.current === null) return;
@@ -45,32 +45,11 @@ export function MainForm() {
       type: nextCycleType,
     };
 
-    const secondsRemaining = newTask.duration * 60;
-
-    setState(prevState => ({
-      ...prevState,
-      config: { ...prevState.config },
-      activeTask: newTask,
-      currentCycle: nextCycle,
-      secondsRemaining, //conferir
-      formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining), //conferir
-      tasks: [...prevState.tasks, newTask],
-    }));
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
   }
 
   function handleInterruptTask() {
-    setState(prevState => ({
-      ...prevState,
-      activeTask: null,
-      secondsRemaining: 0,
-      formattedSecondsRemaining: '00:00',
-      tasks: prevState.tasks.map(task => {
-        if( prevState.activeTask && prevState.activeTask.id === task.id){
-          return {...task,  interruptedDate: Date.now() };
-        }
-        return task;
-      }),
-    }));
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
   return (

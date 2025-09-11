@@ -7,7 +7,7 @@ type <- o tipo da ação, geralmente uma string (pode ser enum, constante, etc).
 payload <- os dados extras enviados junto com a action, se necessário para atualizar o estado.
 */
 
-import type { TaskModel } from '../../models/TaskModel';
+import { type TaskModel } from '../../models/TaskModel';
 
 export enum TaskActionTypes {
   START_TASK = 'START_TASK',
@@ -15,19 +15,18 @@ export enum TaskActionTypes {
   RESET_STATE = 'RESET_STATE',
 }
 
-export type TaskActionsWithPayload =
+export type TaskActionsWithPayload = {
+  type: TaskActionTypes.START_TASK;
+  payload: TaskModel;
+};
+
+export type TaskActionsWithoutPayload =
   | {
-      type: TaskActionTypes.START_TASK;
-      payload: TaskModel;
+      type: TaskActionTypes.RESET_STATE;
     }
   | {
       type: TaskActionTypes.INTERRUPT_TASK;
-      payload: TaskModel;
     };
-
-export type TaskActionsWithoutPayload = {
-  type: TaskActionTypes.RESET_STATE;
-};
 
 export type TaskActionModel =
   | TaskActionsWithPayload
