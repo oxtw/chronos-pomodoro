@@ -9,7 +9,6 @@ import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 import { Tips } from '../Tips';
-import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
 
 //Utilizar useState quando quiser o valor do input em tempo real.
 //Utilizar useRef quando quiser o valor do input somente no momento do submit.
@@ -48,19 +47,7 @@ export function MainForm() {
     };
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
-
-    const worker = TimerWorkerManager.getInstance();
-
-    worker.postMessage('FAVOR'); // sim, posso fazer um favor
-    worker.postMessage('FALA_OI');
-    worker.postMessage('BLABLALA');
-    worker.postMessage('FECHAR');
-
-    worker.onmessage(event => {
-      console.log('PRINCIPAL RECEBEU', event.data);
-    });
   }
-
   function handleInterruptTask() {
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
