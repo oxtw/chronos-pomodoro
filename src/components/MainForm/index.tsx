@@ -9,6 +9,7 @@ import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 import { Tips } from '../Tips';
+import { showMessage } from '../../adapters/showMessage';
 
 //Utilizar useState quando quiser o valor do input em tempo real.
 //Utilizar useRef quando quiser o valor do input somente no momento do submit.
@@ -22,6 +23,7 @@ export function MainForm() {
 
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    showMessage.dissmiss();
 
     //Se o input estiver vazio, não faz nada.
     if (taskNameInput.current === null) return;
@@ -31,7 +33,7 @@ export function MainForm() {
 
     //Validação simples, se o input estiver vazio, alerta o usuário.
     if (!taskName) {
-      alert('Por favor, digite o nome da tarefa.');
+      showMessage.warn('Por favor, digite o nome da tarefa.');
       return;
     }
 
@@ -47,9 +49,13 @@ export function MainForm() {
     };
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+    showMessage.sucess('Tarefa iniciada com sucesso!');
   }
   function handleInterruptTask() {
+    showMessage.dissmiss();
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
+
+    showMessage.error('Tarefa interrompida.');
   }
 
   return (
