@@ -5,12 +5,14 @@ import { Heading } from '../../components/Heading';
 import { MainTemplate } from '../../templates/MainTemplate';
 import { formatDate } from '../../utils/formatDate';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
+import { getTaskStatus } from '../../utils/getTaskStatus';
 
 import styles from './styles.module.css';
-import { getTaskStatus } from '../../utils/getTaskStatus';
+import { sortTasks } from '../../utils/sortTasks';
 
 export default function History() {
   const { state } = useTaskContext();
+  const sortedTasks = sortTasks({ tasks: state.tasks });
 
   return (
     <MainTemplate>
@@ -42,7 +44,7 @@ export default function History() {
             </thead>
 
             <tbody>
-              {state.tasks.map(task =>{
+              {sortedTasks.map(task => {
                 const taskTypeDictionary = {
                   workTime: 'Foco',
                   shortBreakTime: 'Descanso curto',
