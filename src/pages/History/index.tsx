@@ -45,8 +45,13 @@ export default function History() {
     console.log('Limpando histórico');
     setConfirmClearHistory(false);
     dispatch({ type: TaskActionTypes.RESET_STATE });
-    
   }, [confirmClearHistory, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      showMessage.dissmiss();
+    };
+  }, []);
 
   function handleSortTasks({ field }: Pick<SortTasksOptions, 'field'>) {
     const newDirection = sortTasksOptions.direction === 'desc' ? 'asc' : 'desc';
