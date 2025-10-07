@@ -99,7 +99,7 @@ export default function Settings() {
           <div className='formRow'>
             <DefaultInput
               id='longBreakTime'
-              labelText='Descanso Curto'
+              labelText='Descanso Longo'
               ref={longBreakTimeInput}
               defaultValue={state.config.longBreakTime}
               type='number'
