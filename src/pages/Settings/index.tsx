@@ -4,17 +4,20 @@ import { Heading } from '../../components/Heading/index';
 import { DefaultInput } from '../../components/DefaultInput';
 import { DefaultButton } from '../../components/DefaultButton';
 import { SaveIcon } from 'lucide-react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { showMessage } from '../../adapters/showMessage';
 import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 
 export default function Settings() {
   const { state, dispatch } = useTaskContext();
-
   const workTimeInput = useRef<HTMLInputElement>(null);
   const shortBreakTimeInput = useRef<HTMLInputElement>(null);
   const longBreakTimeInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+      document.title = 'Configurações | Chronos Pomodoro';
+    }, []);
 
   function handleSaveSettings(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -14,6 +14,7 @@ import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 import styles from './styles.module.css';
 
 export default function History() {
+  
   const { state, dispatch } = useTaskContext();
   const [confirmClearHistory, setConfirmClearHistory] = useState(false);
   const hasTasks = state.tasks.length > 0;
@@ -27,6 +28,10 @@ export default function History() {
       };
     },
   );
+
+  useEffect(() => {
+    document.title = 'Histórico | Chronos Pomodoro';
+  }, []);
 
   useEffect(() => {
     setSortTasksOptions(prevState => ({
